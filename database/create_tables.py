@@ -1,4 +1,5 @@
 import sqlite3
+from schema import SCHEMA, CSV_DIR
 
 
 def create_connection():
@@ -7,4 +8,6 @@ def create_connection():
     return conn, cursor
 
 
-
+def create_tables(conn, cursor):
+    for table, info in SCHEMA.items():
+        s = f"CREATE TABLE {table} if not exists"

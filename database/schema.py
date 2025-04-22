@@ -20,6 +20,20 @@ SCHEMA = {
             'circuit_type': 'TEXT'
         }
     },
+    'teams': {
+        'file': 'teams.csv',
+        'columns': {
+            'team_id': 'INTEGER PRIMARY KEY',
+            'team_name': 'TEXT',
+            'nationality': 'TEXT',
+            'team_principal': 'TEXT',
+            'engine_supplier': 'TEXT',
+            'base_location': 'TEXT',
+            'constructors_championships': 'INTEGER',
+            'founding_year': 'INTEGER',
+            'active': 'BOOLEAN'
+        }
+    },
     'drivers': {
         'file': 'drivers.csv',
         'columns': {
@@ -35,20 +49,6 @@ SCHEMA = {
         },
         'foreign_keys': {
             'team_id': 'teams(team_id)'
-        }
-    },
-    'teams': {
-        'file': 'teams.csv',
-        'columns': {
-            'team_id': 'INTEGER PRIMARY KEY',
-            'team_name': 'TEXT',
-            'nationality': 'TEXT',
-            'team_principal': 'TEXT',
-            'engine_supplier': 'TEXT',
-            'base_location': 'TEXT',
-            'constructors_championships': 'INTEGER',
-            'founding_year': 'INTEGER',
-            'active': 'BOOLEAN'
         }
     },
     'races': {
