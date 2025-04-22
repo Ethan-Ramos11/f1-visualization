@@ -1,0 +1,21 @@
+driver_id,first_name,last_name,nationality,date_of_birth,team_id,driver_number,championships_won,active
+1,Max,Verstappen,Dutch,1997-09-30,1,1,4,True
+2,Lewis,Hamilton,British,1985-01-07,2,44,7,True
+3,Charles,Leclerc,Monegasque,1997-10-16,2,16,0,True
+4,Lando,Norris,British,1999-11-13,4,4,0,True
+5,Carlos,Sainz,Spanish,1994-09-01,8,55,0,True
+6,George,Russell,British,1998-02-15,3,63,0,True
+7,Yuki,Tsunoda,Japanese,2000-05-11,1,22,0,True
+8,Fernando,Alonso,Spanish,1981-07-29,5,14,2,True
+9,Oscar,Piastri,Australian,2001-04-06,4,81,0,True
+10,Pierre,Gasly,French,1996-02-07,6,10,0,True
+11,Jack,Doohan,Australian,2003-01-20,6,9,0,True
+12,Nico,Hulkenberg,German,1987-08-19,10,27,0,True
+13,Alex,Albon,Thai,1996-03-23,8,23,0,True
+14,Lance,Stroll,Canadian,1998-10-29,5,18,0,True
+15,Liam,Lawson,New Zealander,2002-02-11,9,15,0,True
+16,Oliver,Bearman,British,2005-05-08,7,87,0,True
+17,Andrea Kimi,Antonelli,Italian,2006-08-25,3,12,0,True
+18,Esteban,Ocon,French,1996-09-17,7,31,0,True
+19,Gabriel,Bortoleto,Brazilian,2004-10-14,10,92,0,True
+20,Isack,Hadjar,French,2004-09-28,9,12,0,True

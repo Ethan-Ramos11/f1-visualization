@@ -1,0 +1,11 @@
+team_id,team_name,nationality,team_principal,engine_supplier,base_location,constructors_championships,founding_year,active
+1,Red Bull Racing,Austrian,Christian Horner,Honda RBPT,Milton Keynes,6,2005,True
+2,Ferrari,Italian,Frédéric Vasseur,Ferrari,Maranello,16,1950,True
+3,Mercedes,German,Toto Wolff,Mercedes,Brackley,8,2010,True
+4,McLaren,British,Andrea Stella,Mercedes,Woking,9,1966,True
+5,Aston Martin,British,Mike Krack,Mercedes,Silverstone,0,2021,True
+6,Alpine,French,Oliver Oakes,Renault,Enstone,2,2021,True
+7,Haas F1 Team,American,Ayao Komatsu,Ferrari,Kannapolis,0,2016,True
+8,Williams,British,James Vowles,Mercedes,Grove,9,1978,True
+9,Racing Bulls,Italian,Laurent Mekies,Honda RBPT,Faenza,0,2024,True
+10,Kick Sauber,Swiss,Alessandro Alunni Bravi,Ferrari,Hinwil,0,1993,True

@@ -1,0 +1,25 @@
+circuit_id,circuit_name,location,country,circuit_length_km,lap_record,lap_record_driver,first_gp_year,circuit_type
+1,Albert Park Circuit,Melbourne,Australia,5.278,1:20.235,Charles Leclerc,1996,Street
+2,Shanghai International Circuit,Shanghai,China,5.451,1:32.238,Michael Schumacher,2004,Permanent
+3,Suzuka Circuit,Suzuka,Japan,5.807,1:30.983,Lewis Hamilton,1987,Permanent
+4,Bahrain International Circuit,Sakhir,Bahrain,5.412,1:31.447,Pedro de la Rosa,2004,Permanent
+5,Jeddah Corniche Circuit,Jeddah,Saudi Arabia,6.174,1:30.734,Lewis Hamilton,2021,Street
+6,Miami International Autodrome,Miami,United States,5.412,1:29.708,Max Verstappen,2022,Temporary
+7,Autodromo Enzo e Dino Ferrari,Imola,Italy,4.909,1:15.484,Lewis Hamilton,1980,Permanent
+8,Circuit de Monaco,Monte Carlo,Monaco,3.337,1:12.909,Lewis Hamilton,1950,Street
+9,Circuit de Barcelona-Catalunya,Barcelona,Spain,4.675,1:18.149,Max Verstappen,1991,Permanent
+10,Circuit Gilles Villeneuve,Montreal,Canada,4.361,1:12.275,Valtteri Bottas,1978,Temporary
+11,Red Bull Ring,Spielberg,Austria,4.318,1:05.619,Carlos Sainz,1970,Permanent
+12,Silverstone Circuit,Silverstone,United Kingdom,5.891,1:27.097,Max Verstappen,1950,Permanent
+13,Hungaroring,Budapest,Hungary,4.381,1:16.627,Lewis Hamilton,1986,Permanent
+14,Circuit de Spa-Francorchamps,Stavelot,Belgium,7.004,1:46.286,Valtteri Bottas,1950,Permanent
+15,Circuit Zandvoort,Zandvoort,Netherlands,4.259,1:11.097,Lewis Hamilton,1952,Permanent
+16,Monza Circuit,Monza,Italy,5.793,1:21.046,Rubens Barrichello,1950,Permanent
+17,Baku City Circuit,Baku,Azerbaijan,6.003,1:43.009,Charles Leclerc,2016,Street
+18,Marina Bay Street Circuit,Singapore,Singapore,4.94,1:35.867,Lewis Hamilton,2008,Street
+19,Circuit of the Americas,Austin,United States,5.513,1:36.169,Charles Leclerc,2012,Permanent
+20,Autódromo Hermanos Rodríguez,Mexico City,Mexico,4.304,1:17.774,Valtteri Bottas,1963,Permanent
+21,Interlagos Circuit,São Paulo,Brazil,4.309,1:10.540,Valtteri Bottas,1973,Permanent
+22,Las Vegas Strip Circuit,Las Vegas,United States,6.12,1:35.490,Oscar Piastri,2023,Street
+23,Losail International Circuit,Lusail,Qatar,5.38,1:23.196,Max Verstappen,2021,Permanent
+24,Yas Marina Circuit,Abu Dhabi,United Arab Emirates,5.281,1:26.103,Max Verstappen,2009,Permanent
