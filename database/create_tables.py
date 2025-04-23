@@ -22,6 +22,12 @@ def convert_to_foreign_keys(info):
     return s[:-1]
 
 
+def get_columns(table_name, cursor):
+    cursor.execute(f"PRAGMA table_info({table_name})")
+    columns = [column[1] for column in cursor.fetchall()]
+    return columns 
+
+
 def create_tables(conn, cursor):
     for table, info in SCHEMA.items():
         columns = convert_to_sql_columns(info["columns"])

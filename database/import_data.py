@@ -11,16 +11,23 @@ def get_table_name(filename):
             return schema
 
 
-def read_csv():
+def read_csv(conn, cursor):
     for filename in os.listdir(CSV_DIR):
+        if not filename.endswith(".csv"):
+            continue
         file_path = os.path.join(CSV_DIR, filename)
+        table_name = get_table_name(filename)
+        if not table_name:
+            continue
         file = pd.read_csv(file_path)
         for i in range(1, len(file)):
-            table_name = SCHEMA[]
+            insert_information(file[i], conn, cursor, table_name)
 
 
 def insert_information(info, conn, cursor, table_name):
-    s = f"""INSERT INTO TABLE {table_name}"""
+    s = f"""INSERT INTO TABLE {table_name} 
+        ()
+        """
 
 
 def main():
