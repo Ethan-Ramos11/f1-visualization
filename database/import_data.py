@@ -10,6 +10,11 @@ def get_table_name(filename):
         if info["file"] == filename:
             return schema
 
+def get_columns(table_name, cursor):
+    cursor.execute(f"PRAGMA table_info({table_name})")
+    columns = [column[1] for column in cursor.fetchall()]
+    return columns 
+
 
 def read_csv(conn, cursor):
     for filename in os.listdir(CSV_DIR):
@@ -21,13 +26,10 @@ def read_csv(conn, cursor):
             continue
         file = pd.read_csv(file_path)
         for i in range(1, len(file)):
-            insert_information(file[i], conn, cursor, table_name)
-
+            insert_information(file[i], conn,cursor, table_name)
 
 def insert_information(info, conn, cursor, table_name):
-    s = f"""INSERT INTO TABLE {table_name} 
-        ()
-        """
+    s = f"""INSERT INTO TABLE {table_name}"""
 
 
 def main():
