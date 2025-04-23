@@ -1,5 +1,5 @@
 import sqlite3
-from schema import SCHEMA, CSV_DIR
+from schema import SCHEMA
 
 
 def create_connection():
@@ -20,6 +20,7 @@ def convert_to_foreign_keys(info):
     for key, val in info["foreign_keys"].items():
         s += f"FOREIGN KEY ({key}) REFERENCES {val},"
     return s[:-1]
+
 
 
 def create_tables(conn, cursor):
