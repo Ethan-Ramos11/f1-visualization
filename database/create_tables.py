@@ -8,11 +8,17 @@ def create_connection():
     return conn, cursor
 
 
-
-
-
 def convert_to_sql_columns(info):
     s = ""
     for key, val in info.items():
         s += f"{key} {val},"
     return s[:-1]
+
+
+def convert_to_foreign_keys(info):
+    s = ""
+    for key, val in info["foreign_keys"].items():
+        s += f"FOREIGN KEY ({key}) REFERENCES {val},"
+    return s[:-1]
+
+
