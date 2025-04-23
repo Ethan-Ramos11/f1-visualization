@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 
 # Define the path to the CSV files
 CSV_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'csv_data')

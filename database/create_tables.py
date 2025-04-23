@@ -8,6 +8,11 @@ def create_connection():
     return conn, cursor
 
 
-def create_tables(conn, cursor):
-    for table, info in SCHEMA.items():
-        s = f"CREATE TABLE {table} if not exists"
+
+
+
+def convert_to_sql_columns(info):
+    s = ""
+    for key, val in info.items():
+        s += f"{key} {val},"
+    return s[:-1]
