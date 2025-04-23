@@ -6,14 +6,15 @@ import os
 
 
 def get_table_name(filename):
-    for schema, info in SCHEMA:
+    for schema, info in SCHEMA.items():
         if info["file"] == filename:
             return schema
+
 
 def get_columns(table_name, cursor):
     cursor.execute(f"PRAGMA table_info({table_name})")
     columns = [column[1] for column in cursor.fetchall()]
-    return columns 
+    return columns
 
 
 def read_csv(conn, cursor):
@@ -25,12 +26,30 @@ def read_csv(conn, cursor):
         if not table_name:
             continue
         file = pd.read_csv(file_path)
-        for i in range(1, len(file)):
-            insert_information(file[i], conn,cursor, table_name)
+        for i in range(len(file)):
+            insert_information(file.iloc[i], conn, cursor, table_name)
+
 
 def insert_information(info, conn, cursor, table_name):
-    s = f"""INSERT INTO TABLE {table_name}"""
+    try:
+        columns = get_columns(table_name, cursor)
+        placeholders = ",".join(["?"] * len(columns))
+
+        s = f"""INSERT INTO {table_name} ({",".join(columns)}) 
+          VALUES ({placeholders})"""
+
+        values = [info[col] for col in columns]
+        cursor.execute(s, values)
+        conn.commit()
+    except Exception as e:
+        raise ValueError(f"Error: {e}")
 
 
 def main():
     conn, cursor = create_connection()
+    read_csv(conn, cursor)
+    conn.close()
+
+
+if __name__ == "__main__":
+    main()
