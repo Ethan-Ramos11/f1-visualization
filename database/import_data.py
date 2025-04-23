@@ -3,6 +3,7 @@ from create_tables import create_connection
 from schema import CSV_DIR, SCHEMA
 import sqlite3
 import os
+import numpy as np
 
 
 def get_table_name(filename):
@@ -38,7 +39,15 @@ def insert_information(info, conn, cursor, table_name):
         s = f"""INSERT INTO {table_name} ({",".join(columns)}) 
           VALUES ({placeholders})"""
 
-        values = [info[col] for col in columns]
+        values = []
+        for col in columns:
+            val = info[col]
+            if isinstance(val, (np.int64, np.int32)):
+                val = int(val)
+            elif isinstance(val, (np.float64, np.float32)):
+                val = float(val)
+            values.append(val)
+
         cursor.execute(s, values)
         conn.commit()
     except Exception as e:
