@@ -22,3 +22,26 @@ def convert_to_foreign_keys(info):
     return s[:-1]
 
 
+def create_tables(conn, cursor):
+    for table, info in SCHEMA.items():
+        columns = convert_to_sql_columns(info["columns"])
+        foreign_keys = ""
+        if "foreign_keys" in info:
+            foreign_keys = ", " + convert_to_foreign_keys(info)
+        s = f"""CREATE TABLE IF NOT EXISTS {table}
+          ({columns}{foreign_keys})"""
+        try:
+            cursor.execute(s)
+            conn.commit()
+        except Exception as e:
+            print(f"Exception: {e}")
+
+
+def main():
+    conn, cursor = create_connection()
+    create_tables(conn, cursor)
+    conn.close()
+
+
+if __name__ == "__main__":
+    main()
