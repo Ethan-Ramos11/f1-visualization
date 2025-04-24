@@ -1,4 +1,4 @@
 from flask import Blueprint
-from . import races 
-from . import drivers
-from . import teams
+from .drivers import drivers_bp
+from .races import races_bp
+from .teams import teamps_bp
