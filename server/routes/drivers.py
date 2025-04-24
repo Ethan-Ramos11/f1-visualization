@@ -38,3 +38,38 @@ def get_all_drivers():
         }), 500
     finally:
         conn.close()
+
+
+@drivers_bp.route('/<driver_id>')
+def get_driver_by_id(driver_id):
+    conn, cursor = create_connection()
+    if not validate_connection(conn):
+        return jsonify({
+            'status': 'Error',
+            'message': 'Database connection failed',
+            'data': None
+        }), 500
+    try:
+        query = "SELECT * FROM drivers WHERE driver_id = ?"
+        cursor.execute(query, (driver_id,))
+        driver = cursor.fetchone()
+        if driver:
+            return jsonify({
+                'status': 'success',
+                'message': 'Driver found',
+                'data': driver
+            }), 200
+        else:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Driver not found',
+                'data': None
+            }), 404
+    except sqlite3.Error as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Database error: {e}',
+            'data': None
+        }), 500
+    finally:
+        conn.close()
