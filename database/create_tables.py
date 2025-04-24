@@ -22,7 +22,6 @@ def convert_to_foreign_keys(info):
     return s[:-1]
 
 
-
 def create_tables(conn, cursor):
     for table, info in SCHEMA.items():
         columns = convert_to_sql_columns(info["columns"])
@@ -36,6 +35,16 @@ def create_tables(conn, cursor):
             conn.commit()
         except Exception as e:
             print(f"Exception: {e}")
+
+
+def validate_connection(conn):
+    if conn == None:
+        return False
+    try:
+        conn.execute("SELECT 1")
+        return True
+    except sqlite3.Error:
+        return False
 
 
 def main():

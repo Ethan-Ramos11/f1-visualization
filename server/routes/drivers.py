@@ -5,15 +5,6 @@ import sqlite3
 drivers_bp = Blueprint('drivers', __name__)
 
 
-def validate_connection(conn):
-    if conn == None:
-        return False
-    try:
-        conn.execute("SELECT 1")
-        return True
-    except sqlite3.Error:
-        return False
-
 
 @drivers_bp.route('/')
 def get_all_drivers():
