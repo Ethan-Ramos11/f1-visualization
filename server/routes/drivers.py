@@ -90,11 +90,6 @@ def get_driver_stats(driver_id):
     pass
 
 
-@drivers_bp.route('/<driver_id>/seasons', methods=['GET'])
-def get_driver_seasons(driver_id):
-    pass
-
-
 @drivers_bp.route('/<driver_id>/teams', methods=['GET'])
 def get_driver_teams(driver_id):
     pass
@@ -112,11 +107,6 @@ def get_driver_standings():
 
 @drivers_bp.route('/<driver_id>/current-team', methods=['GET'])
 def get_driver_current_team(driver_id):
-    pass
-
-
-@drivers_bp.route('/<driver_id>/seasons/<year>', methods=['GET'])
-def get_driver_season(driver_id, year):
     pass
 
 
