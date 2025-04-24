@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from database.create_tables import create_connection, validate_connection
 import sqlite3
 
@@ -76,8 +76,47 @@ def get_driver_by_id(driver_id):
 
 
 @drivers_bp.route('/search', methods=['GET'])
-def search_drivers():
-    pass
+def search_drivers_by_name():
+    conn, cursor = create_connection()
+    if not validate_connection(conn):
+        return jsonify({
+            'status': 'Error',
+            'message': 'Database connection failed',
+            'data': None
+        }), 500
+    try:
+        first_name = request.args.get('first_name', '')
+        last_name = request.args.get('last_name', '')
+        if not first_name or not last_name:
+            return jsonify({
+                'status': 'error',
+                'message': 'Both first and last name required',
+                'data': None
+            }), 400
+        query = """SELECT * FROM drivers 
+                WHERE drivers.first_name LIKE ? AND drivers.last_name LIKE ?"""
+        cursor.execute(query, (f'%{first_name}%', f'%{last_name}%'))
+        driver_info = cursor.fetchone()
+        if driver_info:
+            return jsonify({
+                'status': 'success',
+                'message': f'{first_name} {last_name} info found',
+                'data': driver_info
+            }), 200
+        else:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Driver info not found',
+                'data': None
+            }), 404
+    except sqlite3.Error as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Database error: {e}',
+            'data': None
+        }), 500
+    finally:
+        conn.close()
 
 
 @drivers_bp.route('/filter', methods=['GET'])
