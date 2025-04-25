@@ -178,7 +178,47 @@ def compare_drivers():
 
 @drivers_bp.route('/standings', methods=['GET'])
 def get_driver_standings():
-    pass
+    conn, cursor = create_connection()
+    if not validate_connection(conn):
+        return INVALID_DATABASE_CONNECTION_JSON
+    try:
+        query = """
+        SELECT 
+            ds.position,
+            d.first_name,
+            d.last_name,
+            d.nationality,
+            t.name as team_name,
+            ds.points, 
+            ds.wins,
+            ds.podiums
+        FROM drivers_standings ds
+        JOIN drivers d ON ds.driver_id = d.driver_id
+        JOIN teams t ON d.team_id = t.team_id
+        ORDER BY ds.position ASC
+        """
+        cursor.execute(query)
+        standings = cursor.fetchall()
+        if standings:
+            return jsonify({
+                'status': 'success',
+                'message': 'Successfully retrieved standings',
+                'data': standings
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': 'Could not retrieve standings',
+                'data': []
+            }), 404
+    except sqlite3.Error as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Database error: {e}',
+            'data': None
+        }), 500
+    finally:
+        conn.close()
 
 
 @drivers_bp.route('/<driver_id>/current-team', methods=['GET'])
