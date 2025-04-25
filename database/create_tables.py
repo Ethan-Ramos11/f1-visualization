@@ -1,5 +1,5 @@
 import sqlite3
-from schema import SCHEMA
+from .schema import SCHEMA
 
 
 def create_connection():

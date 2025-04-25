@@ -4,18 +4,20 @@ import sqlite3
 
 drivers_bp = Blueprint('drivers', __name__)
 
-INVALID_DATABASE_CONNECTION_JSON = jsonify({
-    'status': 'Error',
-    'message': 'Database connection failed',
-    'data': None
-}), 500
+
+def get_invalid_db_response():
+    return jsonify({
+        'status': 'Error',
+        'message': 'Database connection failed',
+        'data': None
+    }), 500
 
 
 @drivers_bp.route('/', methods=['GET'])
 def get_all_drivers():
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return INVALID_DATABASE_CONNECTION_JSON
+        return get_invalid_db_response()
     try:
         query = "SELECT * FROM drivers"
         cursor.execute(query)
@@ -46,7 +48,7 @@ def get_all_drivers():
 def get_driver_by_id(driver_id):
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return INVALID_DATABASE_CONNECTION_JSON
+        return get_invalid_db_response()
     try:
         query = "SELECT * FROM drivers WHERE driver_id = ?"
         cursor.execute(query, (driver_id,))
@@ -77,7 +79,7 @@ def get_driver_by_id(driver_id):
 def search_drivers_by_name():
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return INVALID_DATABASE_CONNECTION_JSON
+        return get_invalid_db_response()
     try:
         first_name = request.args.get('first_name', '')
         last_name = request.args.get('last_name', '')
@@ -127,7 +129,7 @@ def get_driver_stats(driver_id):
 def get_driver_team(driver_id):
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return INVALID_DATABASE_CONNECTION_JSON
+        return get_invalid_db_response()
     try:
         team_id_query = """
         SELECT drivers.team_id FROM DRIVERS
@@ -180,7 +182,7 @@ def compare_drivers():
 def get_driver_standings():
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return INVALID_DATABASE_CONNECTION_JSON
+        return get_invalid_db_response()
     try:
         query = """
         SELECT 
