@@ -4,16 +4,18 @@ import sqlite3
 
 drivers_bp = Blueprint('drivers', __name__)
 
+INVALID_DATABASE_CONNECTION_JSON = jsonify({
+    'status': 'Error',
+    'message': 'Database connection failed',
+    'data': None
+}), 500
+
 
 @drivers_bp.route('/', methods=['GET'])
 def get_all_drivers():
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return jsonify({
-            'status': 'Error',
-            'message': 'Database connection failed',
-            'data': None
-        }), 500
+        return INVALID_DATABASE_CONNECTION_JSON
     try:
         query = "SELECT * FROM drivers"
         cursor.execute(query)
@@ -44,11 +46,7 @@ def get_all_drivers():
 def get_driver_by_id(driver_id):
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return jsonify({
-            'status': 'Error',
-            'message': 'Database connection failed',
-            'data': None
-        }), 500
+        return INVALID_DATABASE_CONNECTION_JSON
     try:
         query = "SELECT * FROM drivers WHERE driver_id = ?"
         cursor.execute(query, (driver_id,))
@@ -79,11 +77,7 @@ def get_driver_by_id(driver_id):
 def search_drivers_by_name():
     conn, cursor = create_connection()
     if not validate_connection(conn):
-        return jsonify({
-            'status': 'Error',
-            'message': 'Database connection failed',
-            'data': None
-        }), 500
+        return INVALID_DATABASE_CONNECTION_JSON
     try:
         first_name = request.args.get('first_name', '')
         last_name = request.args.get('last_name', '')
@@ -93,7 +87,7 @@ def search_drivers_by_name():
                 'message': 'Both first and last name required',
                 'data': None
             }), 400
-        query = """SELECT * FROM drivers 
+        query = """SELECT * FROM drivers
                 WHERE drivers.first_name LIKE ? AND drivers.last_name LIKE ?"""
         cursor.execute(query, (f'%{first_name}%', f'%{last_name}%'))
         driver_info = cursor.fetchone()
@@ -129,9 +123,52 @@ def get_driver_stats(driver_id):
     pass
 
 
-@drivers_bp.route('/<driver_id>/teams', methods=['GET'])
-def get_driver_teams(driver_id):
-    pass
+@drivers_bp.route('/<driver_id>/team', methods=['GET'])
+def get_driver_team(driver_id):
+    conn, cursor = create_connection()
+    if not validate_connection(conn):
+        return INVALID_DATABASE_CONNECTION_JSON
+    try:
+        team_id_query = """
+        SELECT drivers.team_id FROM DRIVERS
+        WHERE drivers.driver_id = ?
+        """
+        cursor.execute(team_id_query, (driver_id))
+        team_id = cursor.fetchone()
+        if not team_id:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Driver not found',
+                'data': None
+            }), 404
+        team_name_query = """
+        SELECT teams.name FROM teams
+        WHERE teams.team_id = ?
+        """
+        cursor.execute(team_name_query, (team_id[0]))
+        team_name = cursor.fetchone()
+        if team_name:
+            return jsonify({
+                'status': 'success',
+                'message': "Successfully found team name",
+                'data': {
+                    "team_id": team_id[0],
+                    "team_name": team_name[0]}
+            }), 200
+        else:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Team not found',
+                'data': None
+            }), 404
+    except sqlite3.Error as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Database error: {e}',
+            'data': None
+        }), 500
+    finally:
+        conn.close()
 
 
 @drivers_bp.route('/compare', methods=['GET'])
