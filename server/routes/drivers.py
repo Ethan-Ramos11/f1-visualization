@@ -185,13 +185,13 @@ def get_driver_standings():
         return get_invalid_db_response()
     try:
         query = """
-        SELECT 
+        SELECT
             ds.position,
             d.first_name,
             d.last_name,
             d.nationality,
             t.name as team_name,
-            ds.points, 
+            ds.points,
             ds.wins,
             ds.podiums
         FROM drivers_standings ds
@@ -223,11 +223,6 @@ def get_driver_standings():
         conn.close()
 
 
-@drivers_bp.route('/<driver_id>/current-team', methods=['GET'])
-def get_driver_current_team(driver_id):
-    pass
-
-
 @drivers_bp.route('/<driver_id>/races', methods=['GET'])
 def get_driver_races(driver_id):
     pass
@@ -253,6 +248,44 @@ def compare_head_to_head(driver_id, other_driver_id):
     pass
 
 
-@drivers_bp.route('/<driver_id>/teammates', methods=['GET'])
-def get_driver_teammates(driver_id):
-    pass
+@drivers_bp.route('/<driver_id>/teammate', methods=['GET'])
+def get_driver_teammate(driver_id):
+    conn, cursor = create_connection()
+    if not validate_connection(conn):
+        return get_invalid_db_response()
+    try:
+        query = """
+        SELECT d.team_id
+        FROM drivers d
+        WHERE d.driver_id = ?
+        """
+        cursor.execute(query, (driver_id))
+        team_id = cursor.fetchone()
+        if not team_id:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Driver not found',
+                'data': None
+            }), 404
+        cursor.execute(query)
+        standings = cursor.fetchall()
+        if standings:
+            return jsonify({
+                'status': 'success',
+                'message': 'Successfully retrieved standings',
+                'data': standings
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': 'Could not retrieve standings',
+                'data': []
+            }), 404
+    except sqlite3.Error as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Database error: {e}',
+            'data': None
+        }), 500
+    finally:
+        conn.close()
